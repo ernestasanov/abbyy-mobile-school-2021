@@ -1,20 +1,23 @@
 package me.shafran.rvsample
 
-import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class PersonViewHolder(itemView: View, listener: PersonAdapter.Listener?)
+class LeftPersonViewHolder(itemView: LinearLayout, listener: (Long) -> Unit)
 	: RecyclerView.ViewHolder(itemView) {
 	protected val textView: TextView = itemView.findViewById(R.id.personNameTextView)
-	protected lateinit var data: Person
+	private lateinit var data: Person
 
 	init {
-		itemView.setOnClickListener {
-			listener?.onPersonClick(data.id)
+		textView.setOnClickListener {
+			listener(data.id)
 		}
 	}
 
-	abstract fun bind(person: Person)
+	fun bind(person: Person) {
+		data = person
+		textView.text = data.name
+	}
 
 }

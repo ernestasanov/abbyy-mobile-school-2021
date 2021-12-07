@@ -1,21 +1,25 @@
 package me.shafran.rvsample
 
-import android.view.Gravity
-import android.view.View
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 
 class RightPersonViewHolder(
-	itemView: View,
-	listener: PersonAdapter.Listener?
-) : PersonViewHolder(itemView, listener) {
-	init {
-		textView.gravity = Gravity.END
-	}
+    itemView: ConstraintLayout,
+    listener: (Long) -> Unit
+) : RecyclerView.ViewHolder(itemView) {
+    private val textView: TextView = itemView.findViewById(R.id.personNameTextView)
+    private lateinit var data: Person
 
-	override fun bind(person: Person) {
-		data = person
-		textView.text = person.name
-	}
+    init {
+        textView.setOnClickListener {
+            listener(data.id)
+        }
+    }
+
+    fun bind(person: Person) {
+        data = person
+        textView.text = data.name
+    }
 
 }

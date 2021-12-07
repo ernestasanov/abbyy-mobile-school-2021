@@ -8,14 +8,14 @@ import java.io.InputStreamReader
 import java.util.*
 
 object PersonRepository {
-	private val PERSON_LIST: MutableMap<Long, Person> = HashMap()
+	private val PERSON_LIST = mutableListOf<Person>()
 	fun initialize(context: Context) {
 		try {
 			BufferedReader(InputStreamReader(context.assets.open("names.txt"))).use { reader ->
 				var name = reader.readLine()
 				var id: Long = 0
-				while(!TextUtils.isEmpty(name)) {
-					PERSON_LIST[id] = Person(id, name)
+				while (!TextUtils.isEmpty(name)) {
+					PERSON_LIST.add(Person(id, name))
 					++id
 					name = reader.readLine()
 				}
@@ -27,10 +27,10 @@ object PersonRepository {
 	}
 
 	fun getPersonList(): List<Person> {
-		return ArrayList(PERSON_LIST.values)
+		return PERSON_LIST.toList()
 	}
 
 	fun getPersonById(id: Long): Person {
-		return PERSON_LIST[id] ?: throw Exception()
+		return PERSON_LIST[id.toInt()]
 	}
 }

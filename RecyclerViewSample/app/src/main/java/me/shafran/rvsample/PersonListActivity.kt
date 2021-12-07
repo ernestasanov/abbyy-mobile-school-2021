@@ -6,10 +6,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class PersonListActivity : AppCompatActivity(), PersonAdapter.Listener {
-	override fun onPersonClick(id: Long) {
-		startActivity(PersonDetailActivity.getIntent(this, id))
-	}
+class PersonListActivity : AppCompatActivity() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -23,7 +20,17 @@ class PersonListActivity : AppCompatActivity(), PersonAdapter.Listener {
 		val adapter = PersonAdapter()
 		recyclerView.adapter = adapter
 
-		adapter.personList = PersonRepository.getPersonList()
-		adapter.listener = this
+		val thread = Thread {
+			PersonRepository.initialize(this)
+			adapter.personList = PersonRepository.getPersonList()
+			recyclerView.post {
+				adapter.notifyDataSetChanged()
+			}
+		}
+		thread.start()
+		adapter.listener = { personId ->
+			val intent = PersonDetailActivity.getIntent(this, personId)
+			startActivity(intent)
+		}
 	}
 }
