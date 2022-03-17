@@ -4,9 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 
 class ListFragment : Fragment() {
+	private val viewModel: SharedViewModel by activityViewModels()
+	private lateinit var someTextView: TextView
 	override fun onCreateView(
 		inflater: LayoutInflater,
 		container: ViewGroup?,
@@ -18,6 +23,10 @@ class ListFragment : Fragment() {
 		super.onViewCreated(view, savedInstanceState)
 		view.findViewById<View>(R.id.openDetailButton).setOnClickListener {
 			(requireActivity() as DemoActivity).showDetailFragment("ghjkajsjakasd")
+		}
+		someTextView = view.findViewById(R.id.someText)
+		viewModel.counter.observe(viewLifecycleOwner) { counter ->
+			someTextView.text = "$counter"
 		}
 	}
 

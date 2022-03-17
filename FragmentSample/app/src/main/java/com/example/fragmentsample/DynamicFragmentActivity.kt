@@ -12,7 +12,11 @@ class DynamicFragmentActivity : AppCompatActivity() {
 		if (savedInstanceState == null) {
 			supportFragmentManager
 				.beginTransaction()
-				.replace(R.id.dynamicFragmentActivityContainer, ExampleFragment.newInstance())
+				.replace(R.id.dynamicFragmentActivityContainer, ExampleFragment.newInstance("A"))
+				.commit()
+			supportFragmentManager
+				.beginTransaction()
+				.replace(R.id.dynamicFragmentActivityContainer, ExampleFragment.newInstance("B"))
 				.addToBackStack(null)
 				.commit()
 		}

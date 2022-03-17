@@ -5,14 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".StaticFragmentActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Example activity"
-        android:textSize="40sp" />
-
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/exampleFragment"
         android:name="com.example.fragmentsample.ExampleFragment"
         android:layout_width="match_parent"
