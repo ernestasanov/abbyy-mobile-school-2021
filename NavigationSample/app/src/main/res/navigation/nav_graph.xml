@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.learning.navigation.ui.main.MainFragment"
+        android:label="main_fragment"
+        tools:layout="@layout/main_fragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_blank"
+            app:destination="@id/blankFragment" />
+
+        <action
+            android:id="@+id/action_mainFragment_to_dialogFragment"
+            app:destination="@id/dialogFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_navigation"
+            app:destination="@id/inner_graph" />
+    </fragment>
+    <fragment android:id="@+id/blankFragment"
+        android:name="com.learning.navigation.ui.main.BlankFragment"
+        android:label="blank_fragment"
+        tools:layout="@layout/fragment_blank">
+        <argument
+            android:name="myArg"
+            app:argType="integer"
+            android:defaultValue="1"
+            />
+        <action
+            android:id="@+id/action_blankFragment_to_destinationActivity"
+            app:destination="@id/destinationActivity" />
+    </fragment>
+    <dialog
+        android:id="@+id/dialogFragment"
+        android:name="com.learning.navigation.ui.main.DialogFragment"
+        android:label="fragment_dialog"
+        tools:layout="@layout/fragment_dialog">
+        <argument
+            android:name="arg" />
+    </dialog>
+    <activity
+        android:id="@+id/destinationActivity"
+        android:name="com.learning.navigation.DestinationActivity"
+        android:label="activity_destination"
+        tools:layout="@layout/activity_destination" />
+
+    <include app:graph="@navigation/inner_graph" />
+
+    <action android:id="@+id/action_global_blankFragment" app:destination="@id/blankFragment"/>
+</navigation>
